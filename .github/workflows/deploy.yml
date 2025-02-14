@@ -26,3 +26,4 @@ jobs:
             git pull origin main
             touch test
             sudo systemctl restart fastapi.service
+
