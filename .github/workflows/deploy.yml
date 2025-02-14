@@ -1,36 +1,28 @@
-name: Deploy FastAPI to GCP
+name: Deploy to Google Cloud
 
 on:
   push:
     branches:
-      - main  # Change to your main branch
+      - main
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    # environment: GCP_production
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Deploy to GCP VM
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.GCP_HOST }}
-        username: ${{ secrets.GCP_USERNAME }}
-        key: ${{ secrets.GCP_SSH_KEY }}
-        port: 22
-        script: |
-          # Navigate to the project directory
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
+        with:
+          host: ${{ secrets.GCP_HOST }}  
+          username: ${{ secrets.GCP_USERNAME }}  
+          key: ${{ secrets.GCP_SSH_KEY }} 
+          port: 22
 
-          cd  ${{ secrets.GCP_PROJECT_PATH }}
-          
-          # Pull the latest changes
-          git pull origin main
-
-          # Restart FastAPI service
-        #   sudo systemctl daemon-reload
-        #   sudo systemctl restart fastapi
-        
-        
-          sudo systemctl status fastapi.service
+          script: |
+            cd ${{ secrets.GCP_PROJECT_PATH }}          
+            git pull origin main
+            touch test
+            sudo systemctl restart fastapi-app.service
