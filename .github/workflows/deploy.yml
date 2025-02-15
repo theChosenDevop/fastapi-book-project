@@ -24,6 +24,5 @@ jobs:
           script: |
             cd ${{ secrets.GCP_PROJECT_PATH }}          
             git pull origin main
-            touch test
             sudo systemctl restart fastapi.service
 
