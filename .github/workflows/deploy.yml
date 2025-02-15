@@ -38,7 +38,7 @@ jobs:
             git reset --hard origin/main
             
             echo "📌 Latest commit deployed:"
-            git log -l
+            git log -1
 
             echo "🚀 Restarting FastApi service..."
             sudo systemctl restart fastapi.service
