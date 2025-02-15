@@ -22,7 +22,24 @@ jobs:
           port: 22
 
           script: |
-            cd ${{ secrets.GCP_PROJECT_PATH }}          
-            git pull origin main
+            echo "🚀 starting deployment on GCP VM..."
+            cd ${{ secrets.GCP_PROJECT_PATH }} || { echo "❌ No Directory found!"; exit 1; }
+            
+            echo "📁 Current Directory:"
+            pwd
+            
+            echo "📃 Listing Files:"
+            ls -la
+
+            echo "🔁 Fetching latest changes..."
+            git fetch origin
+
+            echo "🧹 Resetting to match GitHub main branch..."
+            git reset --hard origin/main
+            
+            echo "📌 Latest commit deployed:"
+            git log -l
+
+            echo "🚀 Restarting FastApi service..."
             sudo systemctl restart fastapi.service
 
