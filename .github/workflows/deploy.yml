@@ -24,6 +24,9 @@ jobs:
           script: |
             echo "🚀 starting deployment on GCP VM..."
             cd ${{ secrets.GCP_PROJECT_PATH }} || { echo "❌ No Directory found!"; exit 1; }
+
+            echo "🛠 Marking Git directory as safe..."
+            git config --global --add safe.directory ${{ secrets.GCP_PROJECT_PATH }}
             
             echo "📁 Current Directory:"
             pwd
